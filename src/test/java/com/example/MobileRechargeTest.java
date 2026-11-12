@@ -6,6 +6,8 @@ import org.junit.jupiter.api.Test;
 
 public class MobileRechargeTest {
 
+    // ---------- MOBILE NUMBER TEST CASES ----------
+
     @Test
     void testValidMobileNumber() {
         assertTrue(
@@ -14,18 +16,56 @@ public class MobileRechargeTest {
     }
 
     @Test
-    void testInvalidMobileNumber() {
-        assertFalse(
-            MobileRecharge.validateMobileNumber("12345")
+    void testValidMobileNumberStartingWith6() {
+        assertTrue(
+            MobileRecharge.validateMobileNumber("6123456789")
         );
     }
 
     @Test
-    void testAnotherInvalidMobileNumber() {
+    void testInvalidMobileNumberTooShort() {
         assertFalse(
             MobileRecharge.validateMobileNumber("987654321")
         );
     }
+
+    @Test
+    void testInvalidMobileNumberTooLong() {
+        assertFalse(
+            MobileRecharge.validateMobileNumber("98765432101")
+        );
+    }
+
+    @Test
+    void testInvalidMobileNumberStartingWith5() {
+        assertFalse(
+            MobileRecharge.validateMobileNumber("5876543210")
+        );
+    }
+
+    @Test
+    void testInvalidMobileNumberWithLetters() {
+        assertFalse(
+            MobileRecharge.validateMobileNumber("98765ABCDE")
+        );
+    }
+
+    @Test
+    void testEmptyMobileNumber() {
+        assertFalse(
+            MobileRecharge.validateMobileNumber("")
+        );
+    }
+
+    @Test
+    void testNullMobileNumber() {
+        assertFalse(
+            MobileRecharge.validateMobileNumber(null)
+        );
+    }
+
+
+    // ---------- RECHARGE PLAN TEST CASES ----------
 
     @Test
     void testPlan199() {
@@ -51,11 +91,38 @@ public class MobileRechargeTest {
         );
     }
 
+
+    // ---------- INVALID PLAN TEST CASES ----------
+
     @Test
-    void testInvalidPlan() {
+    void testInvalidPlanSelection() {
         assertEquals(
             -1,
             MobileRecharge.getRechargeAmount(10)
+        );
+    }
+
+    @Test
+    void testZeroPlanSelection() {
+        assertEquals(
+            -1,
+            MobileRecharge.getRechargeAmount(0)
+        );
+    }
+
+    @Test
+    void testNegativePlanSelection() {
+        assertEquals(
+            -1,
+            MobileRecharge.getRechargeAmount(-1)
+        );
+    }
+
+    @Test
+    void testInvalidLargePlanSelection() {
+        assertEquals(
+            -1,
+            MobileRecharge.getRechargeAmount(100)
         );
     }
 }
